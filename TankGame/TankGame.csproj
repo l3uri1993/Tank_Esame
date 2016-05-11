@@ -39,7 +39,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Camera.cs" />
-    <Compile Include="FreeCamera.cs" />
+    <Compile Include="Tank.cs" />
     <Compile Include="TankGame.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -53,6 +53,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\bell.jpg" />
+    <Content Include="Content\heightmap.jpg" />
+    <Content Include="Content\terrain.fx" />
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>
