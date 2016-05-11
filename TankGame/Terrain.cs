@@ -133,6 +133,14 @@ new Vector2((float)x / textureScale, (float)z / textureScale);
             effect.Parameters["World"].SetValue(Matrix.Identity);
             effect.Parameters["View"].SetValue(camera.View);
             effect.Parameters["Projection"].SetValue(camera.Projection);
+            Vector3 lightDirection = new Vector3(-1f, 1f, -1f);
+            lightDirection.Normalize();
+            effect.Parameters["lightDirection"].SetValue(lightDirection);
+            effect.Parameters["lightColor"].SetValue(new Vector4(1, 1, 1, 1));
+            effect.Parameters["lightBrightness"].SetValue(0.8f);
+            effect.Parameters["ambientLightLevel"].SetValue(0.15f);
+            effect.Parameters["ambientLightColor"].SetValue(
+            new Vector4(1, 1, 1, 1));
             foreach (EffectPass pass in effect.CurrentTechnique.Passes)
             {
                 pass.Apply();

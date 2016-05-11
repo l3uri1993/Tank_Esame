@@ -66,10 +66,10 @@ namespace TankGame
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            camera = new Camera(new Vector3(64f, 16f, 64f),MathHelper.ToRadians(-30), MathHelper.ToRadians(-30), 0f,10000000000f,120f,GraphicsDevice.Viewport.AspectRatio,0.1f,512f);
+            camera = new Camera (new Vector3(64f, 16f, 64f),MathHelper.ToRadians(-30),0f,32f,192f,128f,GraphicsDevice.Viewport.AspectRatio,0.1f,512f);
             LastMouseState = Mouse.GetState();
      
-            terrain = new Terrain(GraphicsDevice,Content.Load<Texture2D>("heightmap"),Content.Load<Texture2D>("bell"),10f,100,100,2f);
+            terrain = new Terrain(GraphicsDevice,Content.Load<Texture2D>("heightmap"),Content.Load<Texture2D>("desert"),10f,100,100,4f);
 
             effect = Content.Load<Effect>("terrain");
 
@@ -200,6 +200,7 @@ namespace TankGame
                 tankTransform.Decompose(out scale, out rotation, out translation);
                 Vector3 tankForward = Vector3.Transform(Vector3.UnitZ, rotation);
                 tank.Position += translation - tankForward * 0.03f;
+                tank.Position = new Vector3(tank.Position.X, terrain.GetHeight(tank.Position.X, tank.Position.Z), tank.Position.Z);
             }
             if (KState.IsKeyDown(Keys.Up))
             {
@@ -219,6 +220,7 @@ namespace TankGame
                 tankTransform.Decompose(out scale, out rotation, out translation);
                 Vector3 tankForward = Vector3.Transform(Vector3.UnitZ, rotation);
                 tank.Position += translation + tankForward * 0.03f;
+                tank.Position = new Vector3(tank.Position.X,terrain.GetHeight(tank.Position.X, tank.Position.Z), tank.Position.Z);
             }
 
 
