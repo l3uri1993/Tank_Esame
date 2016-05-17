@@ -12,15 +12,21 @@ namespace TankGame
         private IndexBuffer indexBuffer;
         private GraphicsDevice device;
         private Texture2D terrainTexture;
+        private Texture2D terrainTexture2;
+        private Texture2D terrainTexture3;
+        private float maxHeight;
         private float textureScale;
         private float[,] heights;
 
-        public Terrain(GraphicsDevice graphicsDevice,Texture2D heightMap,Texture2D terrainTexture, 
+        public Terrain(GraphicsDevice graphicsDevice,Texture2D heightMap,Texture2D terrainTexture, Texture2D terrainTexture2,Texture2D terrainTexture3,
                        float textureScale,int terrainWidth,int terrainHeight,float heightScale)
         {
             device = graphicsDevice;
             this.terrainTexture = terrainTexture;
             this.textureScale = textureScale;
+            this.terrainTexture2 = terrainTexture2;
+            this.terrainTexture3 = terrainTexture3;
+            maxHeight = heightScale;
 
             ReadHeightMap(heightMap,terrainWidth,terrainHeight,heightScale);
 
@@ -141,6 +147,14 @@ new Vector2((float)x / textureScale, (float)z / textureScale);
             effect.Parameters["lightDirection"].SetValue(lightDirection);
             effect.Parameters["lightColor"].SetValue(new Vector4(1, 1, 1, 1));
             effect.Parameters["lightBrightness"].SetValue(0.8f);
+
+            effect.Parameters["ambientLightLevel"].SetValue(0.15f);
+            effect.Parameters["ambientLightColor"].SetValue(
+            new Vector4(1, 1, 1, 1));
+
+            effect.Parameters["terrainTexture2"].SetValue(terrainTexture2);
+            effect.Parameters["terrainTexture3"].SetValue(terrainTexture3);
+            effect.Parameters["maxElevation"].SetValue(maxHeight);
 
             foreach (EffectPass pass in effect.CurrentTechnique.Passes)
             {
