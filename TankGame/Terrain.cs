@@ -27,6 +27,8 @@ namespace TankGame
             BuildVertexBuffer(terrainWidth,terrainHeight,heightScale);
 
             BuildIndexBuffer(terrainWidth,terrainHeight);
+
+            CalculateNormals();
         }
 
         public float GetHeight(float x, float z)
@@ -95,7 +97,7 @@ namespace TankGame
                     vertices[x + (z * width)].TextureCoordinate =
 new Vector2((float)x / textureScale, (float)z / textureScale);
                 }
-            vertexBuffer = new VertexBuffer(device,typeof(VertexPositionNormalTexture),vertices.Length,BufferUsage.WriteOnly);
+            vertexBuffer = new VertexBuffer(device,typeof(VertexPositionNormalTexture),vertices.Length,BufferUsage.None);
             vertexBuffer.SetData(vertices);
         }
 
@@ -122,7 +124,7 @@ new Vector2((float)x / textureScale, (float)z / textureScale);
             device,
             IndexElementSize.SixteenBits,
             indices.Length,
-            BufferUsage.WriteOnly);
+            BufferUsage.None);
             indexBuffer.SetData(indices);
         }
 
@@ -133,14 +135,13 @@ new Vector2((float)x / textureScale, (float)z / textureScale);
             effect.Parameters["World"].SetValue(Matrix.Identity);
             effect.Parameters["View"].SetValue(camera.View);
             effect.Parameters["Projection"].SetValue(camera.Projection);
+
             Vector3 lightDirection = new Vector3(-1f, 1f, -1f);
             lightDirection.Normalize();
             effect.Parameters["lightDirection"].SetValue(lightDirection);
             effect.Parameters["lightColor"].SetValue(new Vector4(1, 1, 1, 1));
             effect.Parameters["lightBrightness"].SetValue(0.8f);
-            effect.Parameters["ambientLightLevel"].SetValue(0.15f);
-            effect.Parameters["ambientLightColor"].SetValue(
-            new Vector4(1, 1, 1, 1));
+
             foreach (EffectPass pass in effect.CurrentTechnique.Passes)
             {
                 pass.Apply();
@@ -148,6 +149,37 @@ new Vector2((float)x / textureScale, (float)z / textureScale);
                 device.Indices = indexBuffer;
                 device.DrawIndexedPrimitives(PrimitiveType.TriangleList,0,0,vertexBuffer.VertexCount,0,indexBuffer.IndexCount / 3);
             }
+        }
+
+        private void CalculateNormals()
+        {
+            VertexPositionNormalTexture[] vertices =
+            new VertexPositionNormalTexture[vertexBuffer.VertexCount];
+            short[] indices = new short[indexBuffer.IndexCount];
+            vertexBuffer.GetData(vertices);
+            indexBuffer.GetData(indices);
+            for (int x = 0; x < vertices.Length; x++)
+                vertices[x].Normal = Vector3.Zero;
+            int triangleCount = indices.Length / 3;
+            for (int x = 0; x < triangleCount; x++)
+            {
+                int v1 = indices[x * 3];
+                int v2 = indices[(x * 3) + 1];
+                int v3 = indices[(x * 3) + 2];
+                Vector3 firstSide =
+                vertices[v2].Position - vertices[v1].Position;
+                Vector3 secondSide =
+                vertices[v1].Position - vertices[v3].Position;
+                Vector3 triangleNormal =
+                Vector3.Cross(firstSide, secondSide);
+                triangleNormal.Normalize();
+                vertices[v1].Normal += triangleNormal;
+                vertices[v2].Normal += triangleNormal;
+                vertices[v3].Normal += triangleNormal;
+            }
+            for (int x = 0; x < vertices.Length; x++)
+                vertices[x].Normal.Normalize();
+            vertexBuffer.SetData(vertices);
         }
     }
 }

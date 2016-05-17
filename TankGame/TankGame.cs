@@ -69,7 +69,7 @@ namespace TankGame
             camera = new Camera (new Vector3(64f, 16f, 64f),MathHelper.ToRadians(-30),0f,32f,192f,128f,GraphicsDevice.Viewport.AspectRatio,0.1f,512f);
             LastMouseState = Mouse.GetState();
      
-            terrain = new Terrain(GraphicsDevice,Content.Load<Texture2D>("heightmap"),Content.Load<Texture2D>("desert"),10f,100,100,4f);
+            terrain = new Terrain(GraphicsDevice,Content.Load<Texture2D>("heightmap"),Content.Load<Texture2D>("prova"),1f,128,128,10f);
 
             effect = Content.Load<Effect>("terrain");
 
