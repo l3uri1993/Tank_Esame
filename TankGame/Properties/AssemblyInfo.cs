@@ -5,8 +5,8 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("TankGame")]
-[assembly: AssemblyProduct("TankGame")]
+[assembly: AssemblyTitle("Tank Animation VN")]
+[assembly: AssemblyProduct("Tank Animation VN")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyCompany("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("71d391de-ce8f-4188-b1c3-fdaf1b34929f")]
+[assembly: Guid("31398ec5-5a48-439a-b33d-7942c1e6a3ed")]
 
 // Version information for an assembly consists of the following four values:
 //

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TankGame
+namespace TankAnimationVN
 {
 #if WINDOWS || LINUX
     /// <summary>
@@ -14,7 +14,7 @@ namespace TankGame
         [STAThread]
         static void Main()
         {
-            using (var game = new TankGame())
+            using (var game = new Game1())
                 game.Run();
         }
     }

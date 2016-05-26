@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-namespace TankGame
+namespace TankAnimationVN
 {
     class Terrain
     {
@@ -139,8 +139,8 @@ new Vector2((float)x / textureScale, (float)z / textureScale);
             effect.CurrentTechnique = effect.Techniques["Technique1"];
             effect.Parameters["terrainTexture1"].SetValue(terrainTexture);
             effect.Parameters["World"].SetValue(Matrix.Identity);
-            effect.Parameters["View"].SetValue(camera.View);
-            effect.Parameters["Projection"].SetValue(camera.Projection);
+            effect.Parameters["View"].SetValue(camera.view);
+            effect.Parameters["Projection"].SetValue(camera.projection);
 
             Vector3 lightDirection = new Vector3(-1f, 1f, -1f);
             lightDirection.Normalize();
